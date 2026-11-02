@@ -1,0 +1,11 @@
+{% load static %}
+<script
+    src="{% static 'pretalx_checklister/compose_links.js' %}"
+    defer
+    data-unread-label="{{ unread_label }}"
+    data-unread-count="{{ unread_count }}"
+    data-unread-url="{{ unread_url }}"
+    data-new-label="{{ new_label }}"
+    data-new-count="{{ new_count }}"
+    data-new-url="{{ new_url }}"
+></script>

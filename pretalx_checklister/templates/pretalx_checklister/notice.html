@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<div class="alert alert-warning">
+    <div>
+        {% if done %}
+            <a href="{{ url }}">{% translate "Crucial information" %}</a>
+        {% else %}
+            <strong>{% translate "There is crucial information for you." %}</strong>
+            {% translate "Please read it and confirm it." %}
+            <a href="{{ url }}">{% translate "Go to the information" %}</a>
+        {% endif %}
+    </div>
+</div>

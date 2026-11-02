@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="alert alert-danger">
+    <div>
+        <strong>pretalx Checklister:</strong>
+        {% if installed %}
+            {% blocktranslate trimmed %}
+                The plugin "pretalx RT" is not enabled for this event. The Checklister needs it and does nothing until
+                it has been enabled in the plugin settings of this event.
+            {% endblocktranslate %}
+        {% else %}
+            {% blocktranslate trimmed %}
+                The plugin "pretalx RT" (the Python package <code>pretalx-rt</code>) is not installed. The Checklister
+                needs it and does nothing until it has been installed. Please ask your pretalx administrator to install
+                it.
+            {% endblocktranslate %}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,170 @@
+# German translation of pretalx Checklister.
+# This file is distributed under the same license as the pretalx Checklister package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pretalx Checklister\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-02 10:13+0100\n"
+"PO-Revision-Date: 2026-11-02 10:30+0100\n"
+"Last-Translator: tomate <tomate@berlin.ccc.de>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps.py
+msgid "pretalx Checklister"
+msgstr "pretalx Checklister"
+
+#: apps.py
+msgid ""
+"Crucial information for accepted speakers that they have to read and "
+"confirm, with RT ticket links, an overview for organisers and mail templates."
+msgstr ""
+"Wichtige Informationen für angenommene Vortragende, die sie lesen und "
+"bestätigen müssen, mit Links zu RT-Tickets, einer Übersicht für die "
+"Organisation und E-Mail-Vorlagen."
+
+#: mail.py
+msgid "URL to the page with the crucial information for speakers"
+msgstr "URL der Seite mit den wichtigen Informationen für Vortragende"
+
+#: models.py
+msgid "Title"
+msgstr "Titel"
+
+#: models.py
+msgid "Text"
+msgstr "Text"
+
+#: models.py
+#, python-brace-format
+msgid ""
+"Markdown is supported. Placeholders: {rt_ticket_id} is the RT ticket number "
+"of the proposal, {rt_mailto} is a mailto link address to the RT queue with "
+"the ticket in the subject, {profile_page_url} is the link to the speaker's "
+"page of the conference (…/CONFERENCE/me/). The box is shown once per speaker "
+"with an accepted or confirmed proposal that has an RT ticket."
+msgstr ""
+"Markdown wird unterstützt. Platzhalter: {rt_ticket_id} ist die RT-"
+"Ticketnummer der Einreichung, {rt_mailto} ist eine mailto-Adresse für die "
+"RT-Queue mit dem Ticket im Betreff, {profile_page_url} ist der Link zur "
+"Seite der Vortragenden in der Konferenz (…/CONFERENCE/me/). Die Box wird "
+"einmal pro vortragender Person angezeigt, wenn sie eine angenommene oder "
+"bestätigte Einreichung mit RT-Ticket hat."
+
+#: signals.py
+msgid "Speaker Checklist"
+msgstr "Checkliste für Vortragende"
+
+#: signals.py templates/pretalx_checklister/notice.html
+msgid "Crucial information"
+msgstr "Wichtige Informationen"
+
+#: signals.py
+msgid "Checkboxes confirmed"
+msgstr "Checkboxen bestätigt"
+
+#: signals.py
+msgid "Speakers who have confirmed no information yet"
+msgstr "Vortragende, die noch keine Information bestätigt haben"
+
+#: signals.py
+msgid "Speakers with new information"
+msgstr "Vortragende mit neuen Informationen"
+
+#: templates/pretalx_checklister/list.html
+#, python-brace-format
+msgid ""
+"These information boxes are shown to speakers above their list of proposals, "
+"once per speaker with an accepted or confirmed proposal that has an RT "
+"ticket. Placeholders: <code>{rt_ticket_id}</code> (ticket number) and "
+"<code>{rt_mailto}</code> (mailto link to the RT queue, subject: <code>[rt-"
+"host #ticket] - proposal title</code>), e.g. <code>[Contact us]"
+"({rt_mailto})</code>, and <code>{profile_page_url}</code> (link to the "
+"speaker's page, <code>…/CONFERENCE/me/</code>)."
+msgstr ""
+"Diese Informationsboxen werden Vortragenden über ihrer Liste der "
+"Einreichungen angezeigt, einmal pro Person mit einer angenommenen oder "
+"bestätigten Einreichung, die ein RT-Ticket hat. Platzhalter: "
+"<code>{rt_ticket_id}</code> (Ticketnummer) und <code>{rt_mailto}</code> "
+"(mailto-Link zur RT-Queue, Betreff: <code>[rt-host #Ticket] - Titel der "
+"Einreichung</code>), z. B. <code>[Schreib uns]({rt_mailto})</code>, sowie "
+"<code>{profile_page_url}</code> (Link zur Seite der Vortragenden, "
+"<code>…/CONFERENCE/me/</code>)."
+
+#: templates/pretalx_checklister/list.html
+msgid "New information box"
+msgstr "Neue Informationsbox"
+
+#: templates/pretalx_checklister/list.html
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/pretalx_checklister/notes.html
+msgid "Important information"
+msgstr "Wichtige Informationen"
+
+#: templates/pretalx_checklister/notes.html
+msgid "New information"
+msgstr "Neue Information"
+
+#: templates/pretalx_checklister/notes.html
+msgid "I have read and understood this."
+msgstr "Ich habe dies gelesen und verstanden."
+
+#: templates/pretalx_checklister/notes.html
+msgid "Save"
+msgstr "Speichern"
+
+#: templates/pretalx_checklister/notes.html
+msgid "There is currently no information for you."
+msgstr "Aktuell gibt es keine Informationen für dich."
+
+#: templates/pretalx_checklister/notice.html
+msgid "There is crucial information for you."
+msgstr "Es gibt wichtige Informationen für dich."
+
+#: templates/pretalx_checklister/notice.html
+msgid "Please read it and confirm it."
+msgstr "Bitte lies sie und bestätige sie."
+
+#: templates/pretalx_checklister/notice.html
+msgid "Go to the information"
+msgstr "Zu den Informationen"
+
+#: templates/pretalx_checklister/rt_missing.html
+msgid ""
+"The plugin \"pretalx RT\" is not enabled for this event. The Checklister "
+"needs it and does nothing until it has been enabled in the plugin settings "
+"of this event."
+msgstr ""
+"Das Plugin „pretalx RT“ ist für diese Veranstaltung nicht aktiviert. Die "
+"Checkliste braucht es und tut nichts, bis es in den Plugin-Einstellungen "
+"dieser Veranstaltung aktiviert wurde."
+
+#: templates/pretalx_checklister/rt_missing.html
+msgid ""
+"The plugin \"pretalx RT\" (the Python package <code>pretalx-rt</code>) is "
+"not installed. The Checklister needs it and does nothing until it has been "
+"installed. Please ask your pretalx administrator to install it."
+msgstr ""
+"Das Plugin „pretalx RT“ (das Python-Paket <code>pretalx-rt</code>) ist nicht "
+"installiert. Die Checkliste braucht es und tut nichts, bis es installiert "
+"wurde. Bitte frage die Administration deiner pretalx-Installation, ob sie es "
+"installieren kann."
+
+#: views.py
+msgid "The information box was saved."
+msgstr "Die Informationsbox wurde gespeichert."
+
+#: views.py
+msgid "The information box was deleted."
+msgstr "Die Informationsbox wurde gelöscht."
+
+#: views.py
+msgid "Your confirmation was saved."
+msgstr "Deine Bestätigung wurde gespeichert."

@@ -1,0 +1,8 @@
+{% load static %}
+<script
+    src="{% static 'pretalx_checklister/nav.js' %}"
+    defer
+    data-url="{{ url }}"
+    data-label="{{ label }}"
+    data-active="{{ active|yesno:'1,0' }}"
+></script>

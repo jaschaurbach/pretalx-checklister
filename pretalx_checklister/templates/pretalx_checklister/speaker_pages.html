@@ -1,0 +1,9 @@
+{% load static %}
+<script
+    src="{% static 'pretalx_checklister/speaker_pages.js' %}"
+    defer
+    data-url="{{ url }}"
+    data-label="{{ label }}"
+    data-profile-url="{{ profile_url }}"
+    data-html="{{ html|force_escape }}"
+></script>

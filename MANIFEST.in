@@ -1,0 +1,6 @@
+recursive-include pretalx_checklister/static *
+recursive-include pretalx_checklister/templates *
+exclude pretalx_checklister/locale/django.pot
+recursive-include pretalx_checklister/locale *
+recursive-include pretalx_checklister *.py
+include justfile

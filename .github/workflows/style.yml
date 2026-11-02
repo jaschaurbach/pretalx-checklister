@@ -1,0 +1,55 @@
+name: Code Style
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'pretalx_checklister/locale/**'
+      - 'pretalx_checklister/static/**'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'pretalx_checklister/locale/**'
+      - 'pretalx_checklister/static/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  style:
+    name: Code style
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: ".github/workflows/python-version.txt"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - uses: extractions/setup-just@v4
+      - name: Run linters
+        run: just fmt-check
+  packaging:
+    name: packaging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+
+        with:
+          python-version-file: ".github/workflows/python-version.txt"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Install Dependencies
+        run: uv pip install --system twine check-manifest build -e .
+      - name: Run check-manifest
+        run: check-manifest .
+      - name: Build package
+        run: python -m build
+      - name: Check package
+        run: twine check dist/*

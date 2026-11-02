@@ -1,0 +1,50 @@
+{% extends "orga/base.html" %}
+{% load i18n %}
+
+{% block extra_title %}pretalx Checklister ::
+{% endblock extra_title %}
+
+{% block content %}
+    <h2 class="page-heading">pretalx Checklister</h2>
+    <p>
+        {% blocktranslate trimmed %}
+            These information boxes are shown to speakers above their list of proposals, once per speaker with an
+            accepted or confirmed proposal that has an RT ticket. Placeholders: <code>{rt_ticket_id}</code> (ticket
+            number) and <code>{rt_mailto}</code>
+            (mailto link to the RT queue, subject: <code>[rt-host #ticket] - proposal title</code>), e.g. <code>[Contact
+                us]({rt_mailto})</code>, and <code>{profile_page_url}</code>
+            (link to the speaker's page, <code>…/CONFERENCE/me/</code>).
+        {% endblocktranslate %}
+    </p>
+    <a class="btn btn-success" href="{% url "plugins:pretalx_checklister:block.new" event=request.event.slug %}"><i
+            class="fa fa-plus"
+        ></i> {% translate "New information box" %}</a>
+    {% if blocks %}
+        <div class="table-responsive mt-3">
+            <table class="table table-sm">
+                <tbody>
+                    {% for block in blocks %}
+                        <tr>
+                            <td>
+                                <a
+                                    href="{% url "plugins:pretalx_checklister:block.edit" event=request.event.slug pk=block.pk %}"
+                                >{{ block.title }}</a>
+                            </td>
+                            <td class="text-end">
+                                <form
+                                    method="post"
+                                    action="{% url "plugins:pretalx_checklister:block.delete" event=request.event.slug pk=block.pk %}"
+                                >
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="fa fa-trash"></i> {% translate "Delete" %}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock content %}
