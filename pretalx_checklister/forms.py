@@ -1,3 +1,4 @@
+from django.db.models import Max
 from i18nfield.forms import I18nModelForm
 
 from .models import InfoBlock
@@ -13,6 +14,11 @@ class InfoBlockForm(I18nModelForm):
 
     def save(self, commit=True):
         self.instance.event = self.event
+        if self.instance.pk is None:
+            last = InfoBlock.objects.filter(event=self.event).aggregate(
+                last=Max("position")
+            )["last"]
+            self.instance.position = 0 if last is None else last + 1
         return super().save(commit=commit)
 
     class Meta:

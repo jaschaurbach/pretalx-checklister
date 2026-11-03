@@ -1,0 +1,21 @@
+{% extends "cfp/event/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Preview" %} ::
+{% endblock title %}
+
+{% block content %}
+    <div class="alert alert-warning">
+        <div>
+            <strong>{% translate "Preview" %}:</strong>
+            {% translate "This is how speakers see their information page. Ticket number and talk are examples." %}
+        </div>
+    </div>
+    <h2>{% translate "Important information" %}</h2>
+    {% if boxes %}
+        {% include "pretalx_checklister/boxes.html" with preview=True %}
+        <button type="button" class="btn btn-success float-right" disabled>{% translate "Save" %}</button>
+    {% else %}
+        <p>{% translate "There is currently no information for you." %}</p>
+    {% endif %}
+{% endblock content %}

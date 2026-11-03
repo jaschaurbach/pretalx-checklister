@@ -20,7 +20,14 @@
             class="fa fa-plus"
         ></i> {% translate "New information box" %}</a>
     {% if blocks %}
-        <div class="table-responsive mt-3">
+        <a
+            class="btn btn-outline-info"
+            href="{% url "plugins:pretalx_checklister:preview" event=request.event.slug %}"
+            target="_blank"
+            rel="noopener"
+        ><i class="fa fa-eye"></i> {% translate "Preview" %}</a>
+        <p class="text-muted mt-3 mb-0">{% translate "Speakers see the boxes in this order." %}</p>
+        <div class="table-responsive mt-1">
             <table class="table table-sm">
                 <tbody>
                     {% for block in blocks %}
@@ -30,8 +37,29 @@
                                     href="{% url "plugins:pretalx_checklister:block.edit" event=request.event.slug pk=block.pk %}"
                                 >{{ block.title }}</a>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end text-nowrap">
+                                {% for direction, icon, label in directions %}
+                                    <form
+                                        method="post"
+                                        class="d-inline"
+                                        action="{% url "plugins:pretalx_checklister:block.move" event=request.event.slug pk=block.pk direction=direction %}"
+                                    >
+                                        {% csrf_token %}
+                                        <button
+                                            type="submit"
+                                            class="btn btn-sm btn-outline-info"
+                                            title="{{ label }}"
+                                            aria-label="{{ label }}"
+                                            {% if direction == "up" and forloop.parentloop.first or direction == "down" and forloop.parentloop.last %}
+                                                disabled
+                                            {% endif %}
+                                        >
+                                            <i class="fa {{ icon }}"></i>
+                                        </button>
+                                    </form>
+                                {% endfor %}
                                 <form
+                                    class="d-inline"
                                     method="post"
                                     action="{% url "plugins:pretalx_checklister:block.delete" event=request.event.slug pk=block.pk %}"
                                 >

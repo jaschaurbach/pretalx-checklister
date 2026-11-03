@@ -12,7 +12,7 @@ from .forms import InfoBlockForm
 from .mail import ensure_mail_templates
 from .models import Acknowledgement, InfoBlock
 from .rt import rt_active
-from .speaker import boxes_for_user, new_box
+from .speaker import boxes_for_user, new_box, preview_boxes
 
 
 class RequiresRT:
@@ -32,6 +32,22 @@ class InfoBlockList(RequiresRT, EventPermissionRequired, TemplateView):
         context = super().get_context_data(**kwargs)
         ensure_mail_templates(self.request.event)
         context["blocks"] = InfoBlock.objects.filter(event=self.request.event)
+        context["directions"] = [
+            ("up", "fa-arrow-up", _("Move up")),
+            ("down", "fa-arrow-down", _("Move down")),
+        ]
+        return context
+
+
+class InfoBlockPreview(RequiresRT, EventPermissionRequired, TemplateView):
+    """The notes page as speakers see it, with example values."""
+
+    permission_required = "event.update_event"
+    template_name = "pretalx_checklister/preview.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["boxes"] = preview_boxes(self.request.event)
         return context
 
 
@@ -61,6 +77,25 @@ class InfoBlockEdit(RequiresRT, EventPermissionRequired, FormView):
         form.save()
         messages.success(self.request, _("The information box was saved."))
         return super().form_valid(form)
+
+
+class InfoBlockMove(RequiresRT, EventPermissionRequired, View):
+    """Move a box one place up or down in the order speakers see."""
+
+    permission_required = "event.update_event"
+
+    def post(self, request, *args, **kwargs):
+        blocks = list(InfoBlock.objects.filter(event=request.event))
+        block = get_object_or_404(InfoBlock, event=request.event, pk=kwargs["pk"])
+        index = next(i for i, other in enumerate(blocks) if other.pk == block.pk)
+        target = index - 1 if kwargs["direction"] == "up" else index + 1
+        if 0 <= target < len(blocks):
+            blocks[index], blocks[target] = blocks[target], blocks[index]
+        # Renumber all boxes, as boxes created before had the same position
+        for position, other in enumerate(blocks):
+            other.position = position
+        InfoBlock.objects.bulk_update(blocks, ["position"])
+        return redirect(request.event.orga_urls.settings + "p/pretalx_checklister/")
 
 
 class InfoBlockDelete(RequiresRT, EventPermissionRequired, View):

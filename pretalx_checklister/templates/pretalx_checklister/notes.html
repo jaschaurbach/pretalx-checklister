@@ -1,6 +1,5 @@
 {% extends "cfp/event/base.html" %}
 {% load i18n %}
-{% load rich_text %}
 
 {% block title %}{% translate "Important information" %} ::
 {% endblock title %}
@@ -15,22 +14,7 @@
     {% if boxes %}
         <form method="post">
             {% csrf_token %}
-            {% for box in boxes %}
-                <div class="alert alert-info" id="box-{{ box.block.pk }}">
-                    <div>
-                        <h4>{{ box.title }}</h4>
-                        {{ box.text|rich_text }}
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="read_{{ box.block.pk }}"
-                                {% if box.acknowledged %}checked{% endif %}
-                            >
-                            {% translate "I have read and understood this." %}
-                        </label>
-                    </div>
-                </div>
-            {% endfor %}
+            {% include "pretalx_checklister/boxes.html" %}
             <button type="submit" class="btn btn-success float-right">{% translate "Save" %}</button>
         </form>
     {% else %}

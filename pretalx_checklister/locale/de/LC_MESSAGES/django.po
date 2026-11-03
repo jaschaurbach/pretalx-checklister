@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pretalx Checklister\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 10:13+0100\n"
+"POT-Creation-Date: 2026-11-03 13:43+0100\n"
 "PO-Revision-Date: 2026-11-02 10:30+0100\n"
 "Last-Translator: tomate <tomate@berlin.ccc.de>\n"
 "Language-Team: German\n"
@@ -50,11 +50,11 @@ msgid ""
 "with an accepted or confirmed proposal that has an RT ticket."
 msgstr ""
 "Markdown wird unterstützt. Platzhalter: {rt_ticket_id} ist die RT-"
-"Ticketnummer der Einreichung, {rt_mailto} ist eine mailto-Adresse für die "
-"RT-Queue mit dem Ticket im Betreff, {profile_page_url} ist der Link zur "
-"Seite der Vortragenden in der Konferenz (…/CONFERENCE/me/). Die Box wird "
-"einmal pro vortragender Person angezeigt, wenn sie eine angenommene oder "
-"bestätigte Einreichung mit RT-Ticket hat."
+"Ticketnummer der Einreichung, {rt_mailto} ist eine mailto-Adresse für die RT-"
+"Queue mit dem Ticket im Betreff, {profile_page_url} ist der Link zur Seite "
+"der Vortragenden in der Konferenz (…/CONFERENCE/me/). Die Box wird einmal "
+"pro vortragender Person angezeigt, wenn sie eine angenommene oder bestätigte "
+"Einreichung mit RT-Ticket hat."
 
 #: signals.py
 msgid "Speaker Checklist"
@@ -76,6 +76,14 @@ msgstr "Vortragende, die noch keine Information bestätigt haben"
 msgid "Speakers with new information"
 msgstr "Vortragende mit neuen Informationen"
 
+#: speaker.py
+msgid "Example talk"
+msgstr "Beispielvortrag"
+
+#: templates/pretalx_checklister/boxes.html
+msgid "I have read and understood this."
+msgstr "Ich habe dies gelesen und verstanden."
+
 #: templates/pretalx_checklister/list.html
 #, python-brace-format
 msgid ""
@@ -93,18 +101,28 @@ msgstr ""
 "<code>{rt_ticket_id}</code> (Ticketnummer) und <code>{rt_mailto}</code> "
 "(mailto-Link zur RT-Queue, Betreff: <code>[rt-host #Ticket] - Titel der "
 "Einreichung</code>), z. B. <code>[Schreib uns]({rt_mailto})</code>, sowie "
-"<code>{profile_page_url}</code> (Link zur Seite der Vortragenden, "
-"<code>…/CONFERENCE/me/</code>)."
+"<code>{profile_page_url}</code> (Link zur Seite der Vortragenden, <code>…/"
+"CONFERENCE/me/</code>)."
 
 #: templates/pretalx_checklister/list.html
 msgid "New information box"
 msgstr "Neue Informationsbox"
 
 #: templates/pretalx_checklister/list.html
+#: templates/pretalx_checklister/preview.html
+msgid "Preview"
+msgstr "Vorschau"
+
+#: templates/pretalx_checklister/list.html
+msgid "Speakers see the boxes in this order."
+msgstr "Vortragende sehen die Boxen in dieser Reihenfolge."
+
+#: templates/pretalx_checklister/list.html
 msgid "Delete"
 msgstr "Löschen"
 
 #: templates/pretalx_checklister/notes.html
+#: templates/pretalx_checklister/preview.html
 msgid "Important information"
 msgstr "Wichtige Informationen"
 
@@ -113,14 +131,12 @@ msgid "New information"
 msgstr "Neue Information"
 
 #: templates/pretalx_checklister/notes.html
-msgid "I have read and understood this."
-msgstr "Ich habe dies gelesen und verstanden."
-
-#: templates/pretalx_checklister/notes.html
+#: templates/pretalx_checklister/preview.html
 msgid "Save"
 msgstr "Speichern"
 
 #: templates/pretalx_checklister/notes.html
+#: templates/pretalx_checklister/preview.html
 msgid "There is currently no information for you."
 msgstr "Aktuell gibt es keine Informationen für dich."
 
@@ -135,6 +151,14 @@ msgstr "Bitte lies sie und bestätige sie."
 #: templates/pretalx_checklister/notice.html
 msgid "Go to the information"
 msgstr "Zu den Informationen"
+
+#: templates/pretalx_checklister/preview.html
+msgid ""
+"This is how speakers see their information page. Ticket number and talk are "
+"examples."
+msgstr ""
+"So sehen Vortragende ihre Informationsseite. Ticketnummer und Vortrag sind "
+"Beispiele."
 
 #: templates/pretalx_checklister/rt_missing.html
 msgid ""
@@ -156,6 +180,14 @@ msgstr ""
 "installiert. Die Checkliste braucht es und tut nichts, bis es installiert "
 "wurde. Bitte frage die Administration deiner pretalx-Installation, ob sie es "
 "installieren kann."
+
+#: views.py
+msgid "Move up"
+msgstr "Nach oben"
+
+#: views.py
+msgid "Move down"
+msgstr "Nach unten"
 
 #: views.py
 msgid "The information box was saved."

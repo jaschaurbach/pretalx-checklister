@@ -1,7 +1,9 @@
+from django.utils.translation import gettext as _
+
 from pretalx.submission.models import SubmissionStates
 
 from .models import Acknowledgement, InfoBlock
-from .rt import mailto_for_ticket, rt_active, ticket_for_submission
+from .rt import build_mailto, mailto_for_ticket, rt_active, ticket_for_submission
 
 
 def accepted_submissions_with_ticket(event, user=None):
@@ -28,6 +30,24 @@ def _acknowledged_blocks(event, user=None):
     return result
 
 
+def _boxes(event, blocks, rt_id, mailto, acknowledged=()):
+    """The boxes with their texts filled in for one ticket."""
+    values = {
+        "rt_ticket_id": rt_id,
+        "rt_mailto": mailto,
+        "profile_page_url": event.urls.user.full(),
+    }
+    return [
+        {
+            "block": block,
+            "title": block.title,
+            "text": block.render_text(str(block.text), values),
+            "acknowledged": block.pk in acknowledged,
+        }
+        for block in blocks
+    ]
+
+
 def boxes_for_user(event, user):
     """The information boxes this speaker has to read, with their texts
     filled in from the speaker's first accepted proposal that has an RT ticket."""
@@ -38,22 +58,27 @@ def boxes_for_user(event, user):
         return []
     for submission in accepted_submissions_with_ticket(event, user):
         ticket = ticket_for_submission(submission)
-        values = {
-            "rt_ticket_id": ticket.rt_id,
-            "rt_mailto": mailto_for_ticket(ticket, submission),
-            "profile_page_url": event.urls.user.full(),
-        }
-        acknowledged = _acknowledged_blocks(event, user).get(user.pk, set())
-        return [
-            {
-                "block": block,
-                "title": block.title,
-                "text": block.render_text(str(block.text), values),
-                "acknowledged": block.pk in acknowledged,
-            }
-            for block in blocks
-        ]
+        return _boxes(
+            event,
+            blocks,
+            ticket.rt_id,
+            mailto_for_ticket(ticket, submission),
+            _acknowledged_blocks(event, user).get(user.pk, set()),
+        )
     return []
+
+
+SAMPLE_TICKET_ID = 12345
+
+
+def preview_boxes(event):
+    """The boxes as a speaker would see them, with an example ticket and talk."""
+    return _boxes(
+        event,
+        list(InfoBlock.objects.filter(event=event)),
+        SAMPLE_TICKET_ID,
+        build_mailto(event.pk, SAMPLE_TICKET_ID, _("Example talk")),
+    )
 
 
 def all_acknowledged(boxes):

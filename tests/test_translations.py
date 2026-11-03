@@ -26,3 +26,9 @@ def test_speaker_pages_are_shown_in_german(speaker_client, event, block, make_ta
     assert "Wichtige Informationen" in content
     assert "Ich habe dies gelesen und verstanden." in content
     assert "Important information" not in content
+
+
+def test_preview_texts_are_translated_to_german():
+    with override("de"):
+        assert gettext("Preview") == "Vorschau"
+        assert gettext("Example talk") == "Beispielvortrag"

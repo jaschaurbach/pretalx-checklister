@@ -9,6 +9,7 @@ from pretalx_checklister.speaker import (
     all_acknowledged,
     boxes_for_user,
     new_box,
+    preview_boxes,
     speaker_groups,
 )
 
@@ -156,3 +157,15 @@ def test_groups_ignore_speakers_without_account(
         submission.speakers.add(managed_speaker)
         groups = speaker_groups(event)
     assert groups == {"unread": [speaker_user.get_speaker(event).code], "new": []}
+
+
+# preview_boxes
+
+
+@pytest.mark.django_db
+def test_preview_boxes_use_example_values(event, block):
+    with scopes_disabled():
+        boxes = preview_boxes(event)
+    assert [b["block"] for b in boxes] == [block]
+    assert "ticket 12345" in boxes[0]["text"]
+    assert not boxes[0]["acknowledged"]
